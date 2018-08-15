@@ -1,1 +1,1 @@
-console.log('yay');
+console.log('home');
