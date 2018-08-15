@@ -3,10 +3,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require('path');
 
 // ==================== INTERNAL IMPORTS ==================== //
 
-const models = require('./models');
+// const User = require('./models/user');
 
 // ==================== MIDDLEWARE ==================== //
 
@@ -29,6 +30,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+// serving static files
+app.use(express.static('views'));
+
 // ==================== DATABASE ==================== //
 
 mongoose.connect('mongodb://127.0.0.1/citiponto');
@@ -46,6 +50,14 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.get('/', (req, res) => {
   res.send('LISTENING ON PORT 3000');
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/login/login.html'));
+});
+
+app.get('/home', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/home/home.html'));
 });
 
 // ==================== START SERVER ==================== //
