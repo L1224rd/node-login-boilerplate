@@ -8,6 +8,7 @@ const path = require('path');
 // ==================== INTERNAL IMPORTS ==================== //
 
 // const User = require('./models/user');
+const providers = require('./routes/providers');
 
 // ==================== MIDDLEWARE ==================== //
 
@@ -67,6 +68,8 @@ app.get('/login', (req, res) => {
 app.get('/home', (req, res) => {
   res.sendFile(getViewPath('home'));
 });
+
+app.use('/providers', providers);
 
 // ==================== START SERVER ==================== //
 
