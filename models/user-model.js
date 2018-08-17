@@ -5,13 +5,13 @@ const { Schema } = mongoose; // Standard interface used by mongoose to define mo
 const User = mongoose.model(
   'User',
   new Schema({
-    name: String,
-    email: String,
-    password: String,
-    role: String,
-    admin: Boolean,
-    totalTime: Number,
-    history: Array,
+    name: { type: String, default: 'Not defined' },
+    email: { type: String, default: 'Not defined' },
+    password: { type: String, default: 'Not defined' },
+    role: { type: String, default: 'Not defined' },
+    admin: { type: Boolean, default: false },
+    totalTime: { type: Number, default: 0 },
+    history: { type: Array, default: [] },
   }),
 );
 

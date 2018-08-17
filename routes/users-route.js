@@ -12,22 +12,37 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-// User.remove({}, () => {
-//   console.log('removed');
-// });
-
-// User.find({}, (err, data) => {
-//   console.log(data);
-// });
-
 app.post('/set', (req, res) => {
-  req.body.admin = req.body.admin !== undefined;
+  // add a user to the database
+  req.body.admin = req.body.admin !== undefined; // set the admin wether it is checked or not
   User.create(req.body, (err) => {
     if (err) {
       res.send(err);
       return;
     }
-    res.redirect('/register');
+    res.redirect('/register'); // redirect to the same page
+  });
+});
+
+app.get('/', (req, res) => {
+  // returns all the users
+  User.find({}, (err, data) => {
+    if (err) {
+      res.send(err);
+      return;
+    }
+    res.send(data);
+  });
+});
+
+app.get('/:id', (req, res) => {
+  // return the user specified by id
+  User.find({ _id: req.params.id }, (err, data) => {
+    if (err) {
+      res.send(err);
+      return;
+    }
+    res.send(data);
   });
 });
 
