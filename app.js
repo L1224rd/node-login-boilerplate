@@ -1,20 +1,18 @@
 // ==================== EXTERNAL IMPORTS ==================== //
 
 const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const path = require('path');
 
 // ==================== INTERNAL IMPORTS ==================== //
 
-// const User = require('./models/user');
-const providers = require('./routes/providers');
+const providers = require('./routes/providers-route');
+const users = require('./routes/users-route');
 
 // ==================== MIDDLEWARE ==================== //
 
 const app = express();
 
-// allow you to access ther server from another server app running in you localhost
+// allow you to access ther server from another app running in you localhost
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
@@ -25,37 +23,15 @@ app.use((req, res, next) => {
   next();
 });
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
-
-// parse application/json
-app.use(bodyParser.json());
-
 // serving static files
 app.use(express.static('views'));
 
-// ==================== DATABASE ==================== //
-
-mongoose.connect(
-  // connect to database runing at the specified port
-  'mongodb://localhost:27017/citiponto',
-  { useNewUrlParser: true },
-);
-
-// Get Mongoose to use the global promise library
-mongoose.Promise = global.Promise;
-
-// Get the default connection
-const db = mongoose.connection;
-
-// Bind connection to error event (to get notification of connection errors)
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
 // ==================== FUNCTIONS ==================== //
 
+// returns the full path of the passed view
 const getViewPath = view => path.join(__dirname, `views/${view}/${view}.html`);
 
-// ==================== ROUTES ==================== //
+// ==================== RENDER VIEWS ==================== //
 
 app.get('/', (req, res) => {
   res.send('LISTENING ON PORT 3000');
@@ -69,7 +45,15 @@ app.get('/home', (req, res) => {
   res.sendFile(getViewPath('home'));
 });
 
+app.get('/register', (req, res) => {
+  res.sendFile(getViewPath('register'));
+});
+
+// ==================== ROUTES ==================== //
+
 app.use('/providers', providers);
+
+app.use('/users', users);
 
 // ==================== START SERVER ==================== //
 

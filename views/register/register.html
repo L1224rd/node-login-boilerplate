@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="register.css">
+  <title>Cadastro</title>
+</head>
+
+<body>
+  <h2>Cadastrar Membro</h2>
+  <form action="http://localhost:3000/users/set" method="POST" id="register">
+    <input type="text" placeholder="Nome" name="name">
+    <br>
+    <input type="text" placeholder="Email" name="email">
+    <br>
+    <select name="role">
+      <option value="desenvolvedor">Desenvolvedor</option>
+      <option value="designer">Designer</option>
+      <option value="diretor">Diretor</option>
+      <option value="gerente">Gerente</option>
+    </select>
+    Admin:
+    <input type="checkbox" name="admin">
+    <br>
+    <input type="submit" value="Cadastrar">
+  </form>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="register.js"></script>
+</body>
+
+</html>

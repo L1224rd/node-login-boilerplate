@@ -8,7 +8,10 @@ const User = mongoose.model(
     name: String,
     email: String,
     password: String,
-    rank: { type: Number, default: 1 },
+    role: String,
+    admin: Boolean,
+    totalTime: Number,
+    history: Array,
   }),
 );
 
