@@ -12,6 +12,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+// ==================== ROUTES ==================== //
+
 app.post('/set', (req, res) => {
   // add a user to the database
   req.body.admin = req.body.admin !== undefined; // set the admin wether it is checked or not
@@ -45,5 +47,19 @@ app.get('/:id', (req, res) => {
     res.send(data);
   });
 });
+
+// ---------- login ---------- //
+
+app.post('/set-password', (req, res) => {
+  User.update({ email: req.body.email }, { password: req.body.password }, (err) => {
+    if (err) {
+      res.send(err);
+      return;
+    }
+    res.send('OK');
+  });
+});
+
+// ================================================ //
 
 module.exports = app;
