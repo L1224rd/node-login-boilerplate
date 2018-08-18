@@ -68,14 +68,15 @@ app.post('/set-password', (req, res) => {
   });
 });
 
-app.post('/login', (req, res) => { // checks if the password is correct
+app.post('/login', (req, res) => {
+  // checks if the password is correct
   User.find({ email: req.body.email }, (err, user) => {
     bcrypt.compare(req.body.password, user[0].password, (error, result) => {
-      if (result) {
-        res.send('ok'); // if passwords match respond with ok
+      if (!result) {
+        res.send('error'); // wrong password
         return;
       }
-      res.send('error'); // else respond with error
+      res.redirect('/logged/1');
     });
   });
 });

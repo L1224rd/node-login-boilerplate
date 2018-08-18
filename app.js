@@ -8,6 +8,8 @@ const path = require('path');
 const providers = require('./routes/providers-route');
 const users = require('./routes/users-route');
 
+let logged = 0;
+
 // ==================== MIDDLEWARE ==================== //
 
 const app = express();
@@ -29,20 +31,27 @@ app.use(express.static('views'));
 // ==================== FUNCTIONS ==================== //
 
 // returns the full path of the passed view
-const getViewPath = view => path.join(__dirname, `views/${view}/${view}.html`);
+const getViewPath = (view) =>
+  path.join(__dirname, `views/${view}/${view}.html`);
 
 // ==================== RENDER VIEWS ==================== //
 
 app.get('/', (req, res) => {
-  res.send('LISTENING ON PORT 3000');
+  res.redirect(logged ? '/home' : '/login');
+});
+
+app.get('/logged/:status', (req, res) => {
+  logged = req.params.status;
+  res.send('OK');
+});
+
+app.get('/home', (req, res) => {
+  if (logged) res.sendFile(getViewPath('home'));
+  else res.redirect('/login');
 });
 
 app.get('/login', (req, res) => {
   res.sendFile(getViewPath('login'));
-});
-
-app.get('/home', (req, res) => {
-  res.sendFile(getViewPath('home'));
 });
 
 app.get('/register', (req, res) => {

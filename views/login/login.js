@@ -1,5 +1,5 @@
 $('document').ready(() => {
-  let loginFlag = 0;
+  let loginFlag = 0; // used to toggle the #no-pass link
 
   $('#no-password').click(() => {
     if (!loginFlag) {
@@ -29,15 +29,16 @@ $('document').ready(() => {
     } else {
       $.post(
         'http://localhost:3000/users/login',
-        { // send the post body using ajax
+        {
+          // send the post body using ajax
           email: $('input[name=email]').val(),
           password: $('input[name=password]').val(),
         },
         (data) => {
-          if (data === 'ok') {
-            console.log('yay');
-          } else {
+          if (data === 'error') {
             console.log('nooo');
+          } else {
+            window.location.replace('http://localhost:3000/register');
           }
         },
       );
