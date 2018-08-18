@@ -72,10 +72,10 @@ app.post('/login', (req, res) => { // checks if the password is correct
   User.find({ email: req.body.email }, (err, user) => {
     bcrypt.compare(req.body.password, user[0].password, (error, result) => {
       if (result) {
-        res.redirect('/home'); // if result is true redirect to home page
+        res.send('ok'); // if passwords match respond with ok
         return;
       }
-      res.redirect('/login?error=1'); // else return to login page with an error flag
+      res.send('error'); // else respond with error
     });
   });
 });

@@ -6,13 +6,28 @@ $('document').ready(() => {
   });
 
   $('#login').submit((e) => {
+    e.preventDefault();
     // on submit, if passwords don't match, show error message
     if (
-      $('input[name=password]').val() !== $('input[name=password2]').val()
-      && $('#button-login').attr('value') === 'Salvar'
+      $('input[name=password]').val() !== $('input[name=password2]').val() &&
+      $('#button-login').attr('value') === 'Salvar'
     ) {
-      e.preventDefault();
       $('#error').css('display', 'block');
+    } else {
+      $.post(
+        'http://localhost:3000/users/login',
+        {
+          email: $('input[name=email]').val(),
+          password: $('input[name=password]').val(),
+        },
+        (data) => {
+          if (data === 'ok') {
+            console.log('yay');
+          } else {
+            console.log('nooo');
+          }
+        },
+      );
     }
   });
 });
